@@ -46,6 +46,6 @@ jobs:
             fi
           done < output
           printf "Write List\n"
-          cat write_list
+          cat write_list || echo "No files to write"
           printf "\n\nDelete List\n"
-          cat delete_list
+          cat delete_list || echo "No files to delete"
