@@ -32,4 +32,20 @@ jobs:
 
       - name: Show git diff
         run: |
-          git diff --name-status ${{ github.event.before }} ${{ github.sha }}
+          git diff --name-status ${{ github.event.before }} ${{ github.sha }}  |  xargs -L1 echo >> output
+          while read line; do
+            if [[ "${line:0:1}" == "M" ]] && [[ ! "$(echo "$line" | cut -d " " -f 2)" =~ ".github" ]]; then
+              echo "Modified Status on $(echo "$line" | cut -d " " -f 2)"
+              echo $(echo "$line" | cut -d " " -f 2) >> write_list
+            elif [[ "${line:0:1}" == "A" ]] && [[ ! "$(echo "$line" | cut -d " " -f 2)" =~ ".github" ]]; then
+              echo "Added Status on $(echo "$line" | cut -d " " -f 2)"
+              echo $(echo "$line" | cut -d " " -f 2) >> write_list
+            elif [[ "${line:0:1}" == "D" ]] && [[ ! "$(echo "$line" | cut -d " " -f 2)" =~ ".github" ]]; then
+              echo "Deleted Status on $(echo "$line" | cut -d " " -f 2)"
+              echo $(echo "$line" | cut -d " " -f 2) >> delete_list
+            fi
+          done < output
+          printf "Write List\n"
+          cat write_list
+          printf "\n\nDelete List\n"
+          cat delete_list
