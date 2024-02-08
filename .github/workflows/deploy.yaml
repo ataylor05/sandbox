@@ -32,4 +32,4 @@ jobs:
 
       - name: Show git diff
         run: |
-          git diff --name-only ${{ github.event.before }} ${{ github.sha }}
+          git diff --name-status ${{ github.event.before }} ${{ github.sha }}
