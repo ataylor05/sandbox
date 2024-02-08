@@ -1,0 +1,23 @@
+name: Deploy
+
+on:
+  workflow_dispatch: 
+  push:
+    branches:
+      - 'main'
+      - 'develop'
+
+jobs:
+  deploy:
+    name: deploy
+
+    steps:
+      - name: Fill variables if not set
+        run: |
+          echo "GITHUB_EVENT_NAME=${GITHUB_EVENT_NAME}"
+          echo "GITHUB_REF_NAME=${GITHUB_REF_NAME}"
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+            ref: ${{ env.GITHUB_REF_NAME }}
