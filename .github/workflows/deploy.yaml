@@ -23,8 +23,8 @@ jobs:
           echo "GITHUB_RUN_ATTEMPT=${GITHUB_RUN_ATTEMPT}"
           echo "GITHUB_RUN_ID=${GITHUB_RUN_ID}"
           echo "GITHUB_RUN_NUMBER=${GITHUB_RUN_NUMBER}"
-          echo "GITHUB_RUN_ID=${GITHUB_RUN_ID}"
+          echo "GITHUB_SHA=${GITHUB_SHA}"
 
       - name: Show git diff
         run: |
-          git diff --name-status ${GITHUB_BASE_REF}..${GITHUB_HEAD_REF}
+          git diff --name-only ${{ github.event.before }} ${{ github.sha }}
