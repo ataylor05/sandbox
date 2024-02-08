@@ -12,11 +12,11 @@ jobs:
     name: deploy
     runs-on: ubuntu-latest
     steps:
-    - name: 'Checkout source code'
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-        
+      - name: 'Checkout source code'
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
       - name: Show variables
         run: |
           echo "GITHUB_ACTION=${GITHUB_ACTION}"
