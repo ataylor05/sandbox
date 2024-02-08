@@ -10,8 +10,13 @@ on:
 jobs:
   deploy:
     name: deploy
-
+    runs-on: ubuntu-latest
     steps:
+      - name: Fill variables if not set
+        run: |
+          echo "GITHUB_EVENT_NAME=${GITHUB_EVENT_NAME}"
+          echo "GITHUB_REF_NAME=${GITHUB_REF_NAME}"
+
       - name: Checkout
         uses: actions/checkout@v3
         with:
